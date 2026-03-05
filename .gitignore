@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Local runtime artifacts
+.pw_profile/
+data/
+output/
+logs/
+
+# Large models/binaries (download via scripts/download_models.sh)
+g2pW/g2pw.onnx
+models/piper/*.onnx
+tools/piper/piper.tar.gz
+
+# macOS
+.DS_Store

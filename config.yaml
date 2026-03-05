@@ -1,0 +1,33 @@
+run:
+  topic_url: "https://www.zhihu.com/topic/19554298/hot"
+  max_answers: 3
+  output_name: "sample"
+  resume: true
+
+browser:
+  headless: false
+  user_data_dir: "./.pw_profile"
+  slow_mo_ms: 80
+  timeout_ms: 20000
+  random_wait_min: 0.8
+  random_wait_max: 2.0
+
+video:
+  width: 1080
+  height: 1920
+  fps: 30
+  min_sentence_duration_sec: 2.0
+  font: "PingFang SC"
+  font_size: 52
+  subtitle_color: "white"
+  subtitle_bg_color: "rgba(0,0,0,0.45)"
+
+tts:
+  piper_model: "./models/piper/zh_CN-xiao_ya-medium.onnx"
+  piper_config: "./models/piper/zh_CN-xiao_ya-medium.onnx.json"
+
+images:
+  search_engine: "google_images"
+  per_sentence: 1
+  timeout_sec: 20
+  fallback_color: "#101820"
