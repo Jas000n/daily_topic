@@ -28,7 +28,7 @@ zsh scripts/setup_with_conda.sh
 ## 2) 登录知乎（首次或风控后）
 
 ```bash
-zsh scripts/run_with_conda.sh --login --url "https://www.zhihu.com/question/123456789"
+zsh scripts/run_with_conda.sh --login --url "https://www.zhihu.com/question/48510028"
 ```
 
 完成登录/验证后关闭浏览器。
@@ -38,7 +38,7 @@ zsh scripts/run_with_conda.sh --login --url "https://www.zhihu.com/question/1234
 ## 3) 生成视频（推荐命令行传 URL）
 
 ```bash
-zsh scripts/run_with_conda.sh --force-crawl --url "https://www.zhihu.com/question/123456789"
+zsh scripts/run_with_conda.sh --force-crawl --url "https://www.zhihu.com/question/48510028"
 ```
 
 输出在：`output/sample_*.mp4`
@@ -92,8 +92,8 @@ export GOOGLE_CSE_CX="你的cx"
 ### 40362 风控
 
 ```bash
-zsh scripts/run_with_conda.sh --login --url "问题链接"
-zsh scripts/run_with_conda.sh --force-crawl --url "问题链接"
+zsh scripts/run_with_conda.sh --login --url "https://www.zhihu.com/question/48510028"
+zsh scripts/run_with_conda.sh --force-crawl --url "https://www.zhihu.com/question/48510028"
 ```
 
 建议同一网络连续执行。
