@@ -1,4 +1,4 @@
-# daily_topic
+# 今日话题
 
 给一个知乎问题 URL，自动生成竖屏解说视频。
 
@@ -12,8 +12,6 @@
 git clone https://github.com/Jas000n/daily_topic.git
 cd daily_topic
 ```
-
-> 注意：`git clone` 后目录名是 `daily_topic`（不是旧的本地打包目录名）。
 
 ---
 
