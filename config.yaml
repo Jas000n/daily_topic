@@ -1,8 +1,13 @@
 run:
+  # 传知乎问题链接（推荐），将直接抓该问题下回答；也兼容 topic 链接
   topic_url: "https://www.zhihu.com/topic/19554298/hot"
   max_answers: 3
   output_name: "sample"
   resume: true
+  keep_intermediate: false  # 默认清理中间产物（audio/images/clips）
+
+# 全流程并发（TTS / 配图 / 分镜）统一线程数
+workers: 8
 
 browser:
   headless: false
@@ -17,17 +22,25 @@ video:
   height: 1920
   fps: 30
   min_sentence_duration_sec: 2.0
+  speech_speed: 1.15      # 语速倍率（>1 更快）
   font: "PingFang SC"
   font_size: 52
   subtitle_color: "white"
   subtitle_bg_color: "rgba(0,0,0,0.45)"
+  audio_bitrate: "96k"  # 降低音频码率减小体积
+  audio_fps: 22050       # 降低音频采样率
+  audio_channels: 1      # 单声道
 
 tts:
   piper_model: "./models/piper/zh_CN-xiao_ya-medium.onnx"
   piper_config: "./models/piper/zh_CN-xiao_ya-medium.onnx.json"
+  workers: 8  # TTS 并发线程数（高并发，若不稳定可回退到 4）
+  # length_scale: 当前 piper-tts 版本不支持，先不要启用
 
 images:
-  search_engine: "google_images"
+  provider: "google"   # google | ddg
+  google_api_key: ""   # 可留空，留空则回退 DDG
+  google_cse_cx: ""    # 可留空，留空则回退 DDG
   per_sentence: 1
   timeout_sec: 20
   fallback_color: "#101820"

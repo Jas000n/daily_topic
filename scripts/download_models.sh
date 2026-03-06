@@ -7,8 +7,9 @@ cd "$ROOT_DIR"
 mkdir -p g2pW models/piper
 
 echo "[1/4] Download g2pW model..."
-curl -L -o g2pW/g2pw.onnx \
-  https://huggingface.co/dkounadis/artificial_intelligence/raw/main/g2pW/g2pw.onnx
+# g2pw.onnx 需要 152MB，可从以下地址下载（如果链接失效请自行搜索）
+# curl -L -o g2pW/g2pw.onnx https://your-mirror-url/g2pw.onnx
+echo "请手动复制 g2pw.onnx 到 g2pW/ 目录（152MB）"
 
 echo "[2/4] Download Piper xiaoya model..."
 curl -L -o models/piper/zh_CN-xiao_ya-medium.onnx \

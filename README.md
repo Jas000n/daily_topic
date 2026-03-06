@@ -1,74 +1,109 @@
-# zhihu_video_bot
+# daily_topic
 
-知乎话题短视频生成工具：自动抓取回答 → 离线中文 TTS → 配图 → 合成竖屏视频
+给一个知乎问题 URL，自动生成竖屏解说视频。
+
+流程：抓回答 → 切句 → TTS → 配图 → 合成视频
 
 ---
 
-## 快速开始
+## 0) 克隆仓库
 
 ```bash
-# 1. 创建 Conda 环境
-conda env create -f environment.yml
-conda activate zhihu-video-bot
+git clone https://github.com/Jas000n/daily_topic.git
+cd daily_topic
+```
 
-# 2. 安装 Playwright
-python -m playwright install chromium
+> 注意：`git clone` 后目录名是 `daily_topic`（不是旧的本地打包目录名）。
 
-# 3. 下载大模型（必做）
-bash scripts/download_models.sh
+---
 
-# 4. 首次登录知乎（必做）
-python main.py --login
-# 会弹出浏览器，在浏览器中登录知乎，然后关闭浏览器窗口即可
+## 1) 一键准备环境
 
-# 5. 运行生成视频
-python main.py
-# 产物：output/sample_*.mp4
+```bash
+zsh scripts/setup_with_conda.sh
 ```
 
 ---
 
-## 依赖
+## 2) 登录知乎（首次或风控后）
 
-- Python 3.11 + Conda
-- ffmpeg（视频合成）
-- 主要依赖：`playwright`, `piper-tts`, `duckduckgo-search`, `moviepy`, `Pillow`
+```bash
+zsh scripts/run_with_conda.sh --login --url "https://www.zhihu.com/question/123456789"
+```
+
+完成登录/验证后关闭浏览器。
 
 ---
 
-## 配置（config.yaml）
+## 3) 生成视频（推荐命令行传 URL）
+
+```bash
+zsh scripts/run_with_conda.sh --force-crawl --url "https://www.zhihu.com/question/123456789"
+```
+
+输出在：`output/sample_*.mp4`
+
+---
+
+## 常用配置（config.yaml）
 
 ```yaml
 run:
-  topic_url: "https://www.zhihu.com/topic/19554298/hot"  # 话题地址
-  max_answers: 3                                          # 抓取回答数
+  max_answers: 3
+  keep_intermediate: false
+
+workers: 8
 
 video:
-  width: 1080
-  height: 1920
   fps: 30
+  speech_speed: 1.15
+  audio_bitrate: "96k"
+  audio_fps: 22050
+  audio_channels: 1
+
+images:
+  provider: "google"      # google | ddg | google_html
+  google_api_key: ""      # 或环境变量 GOOGLE_API_KEY
+  google_cse_cx: ""       # 或环境变量 GOOGLE_CSE_CX
 ```
 
----
+图片检索自动兜底：
 
-## 命令
-
-| 命令 | 说明 |
-|------|------|
-| `python main.py --login` | 首次登录知乎（打开浏览器手动登录） |
-| `python main.py` | 运行完整流程生成视频 |
+1. Google CSE
+2. DDG
+3. Google HTML
+4. 本地兜底图
 
 ---
 
-## 输出
+## 可选：配置 Google 图片 API
 
-- 最终视频：`output/sample_*.mp4`
-- 中间文件：`data/` 目录
+```bash
+export GOOGLE_API_KEY="你的key"
+export GOOGLE_CSE_CX="你的cx"
+```
+
+不配置也能跑，会自动回退到 DDG / HTML。
 
 ---
 
-## 故障排查
+## 常见问题
 
-- **卡住不动**：网络或知乎反爬，等待或换 VPN
-- **登录失效**：重新运行 `python main.py --login`
-- **TTS 报错**：确认模型文件已下载（`scripts/download_models.sh`）
+### 40362 风控
+
+```bash
+zsh scripts/run_with_conda.sh --login --url "问题链接"
+zsh scripts/run_with_conda.sh --force-crawl --url "问题链接"
+```
+
+建议同一网络连续执行。
+
+### 配图经常兜底
+- 把 `workers` 降到 4
+- 配置 Google CSE key/cx
+
+### 依赖缺失
+
+```bash
+zsh scripts/setup_with_conda.sh
+```
